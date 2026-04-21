@@ -1,0 +1,308 @@
+https://www.ibm.com/docs/en/watsonx/saas?topic=hub-stream-text-tutorial
+<section id="section-quick-code-tutorial-stream-text">
+        <h1 id="quick-code-tutorial-stream-text">Quick code tutorial: Stream text</h1><div id="lastModifiedDate"><span>Last Updated</span>: 2025-11-13</div>
+        <p>You can return the generated text and chat output as a stream of events instead of a single event with the watsonx.ai API and SDKs.</p>
+        <p>This tutorial demonstrates how to stream generated text. Work with Python, Node.js, or Curl.</p>
+        <p><img src="/docs/en/SSYOK8/wsj/developer-hub/images/stopwatch.png" alt="alt=&quot;&quot;" height="20"> You can complete this tutorial in less than 5 minutes.</p>
+        <dl>
+          <dt><strong>Detailed information</strong></dt>
+          <dd><a href="/docs/en/SSYOK8/wsj/analyze-data/fm-api-generation.html">Generating text</a></dd>
+          <dd><a href="/docs/en/SSYOK8/wsj/analyze-data/fm-models.html">Supported models</a></dd>
+        </dl>
+        <section id="section-prerequisite">
+          <h2 id="prerequisite">Prerequisite<a href="/docs/en/watsonx/saas?topic=hub-stream-text-tutorial#prerequisite" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>Complete the one-time steps to gather your credentials and other information and prepare your system. See <a href="/docs/en/SSYOK8/wsj/developer-hub/quickstart.html#prereq">Prerequisite one-time tasks</a>.</p>
+        </section>
+        <section id="section-stream-generated-text">
+          <h2 id="stream-generated-text">Stream generated text<a href="/docs/en/watsonx/saas?topic=hub-stream-text-tutorial#stream-generated-text" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <style>
+            * {
+              font-family: 'IBM Plex Sans', sans-serif;
+            }
+            
+            .tabs {
+              margin: 0 auto;
+            }
+            /* Hide radio buttons */
+            
+            .tabs input[type="radio"] {
+              display: none;
+            }
+            /* Container for labels */
+            
+            .tab-labels {
+              display: inline-flex;
+              margin-bottom: 0;
+              border: 1px solid black;
+              border-radius: 6px;
+            }
+            
+            .tab-labels label {
+              width: 100px;
+              cursor: pointer;
+              padding: 5px 15px;
+            }
+            
+            .tab-labels label:first-child {
+              border-radius: 4px 0 0 4px;
+            }
+            
+            .tab-labels label:last-child {
+              border-radius: 0 4px 4px 0;
+            }
+            
+            .tab-labels label:not(:last-child) {
+              border-right: 1px solid black;
+            }
+            /* Active tab label */
+            
+            #tab1:checked~.tab-labels label[for="tab1"],
+            #tab2:checked~.tab-labels label[for="tab2"],
+            #tab3:checked~.tab-labels label[for="tab3"] {
+              background: black;
+              color: white;
+            }
+            /* Hide all content by default */
+            
+            .tab-content {
+              display: none;
+              padding: 15px;
+            }
+            /* Show content for checked tab */
+            
+            #tab1:checked~#tab1-content,
+            #tab2:checked~#tab2-content,
+            #tab3:checked~#tab3-content {
+              display: block;
+            }
+          </style>
+          <div class="tabs">
+            
+            <input type="radio" id="tab1" name="tabset" checked="">
+            <input type="radio" id="tab2" name="tabset">
+            <input type="radio" id="tab3" name="tabset">
+            
+            <div class="tab-labels">
+              <label for="tab1">Python</label>
+              <label for="tab2">Node.js</label>
+              <label for="tab3">Curl</label>
+            </div>
+            
+            <div class="tab-content" id="tab1-content">
+              <md-block>
+                <p>To do stream generated text, add the following code to the <code>example.py</code> file. Replace <code>{watsonx_ai_url}</code>, <code>{apikey}</code>, and <code>{project_id}</code> with your values.</p>
+                <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-python hljs" data-highlighted="yes"><span class="hljs-keyword">from</span> ibm_watsonx_ai <span class="hljs-keyword">import</span> Credentials
+<span class="hljs-keyword">from</span> ibm_watsonx_ai.foundation_models <span class="hljs-keyword">import</span> ModelInference
+<span class="hljs-keyword">import</span> json
+
+credentials = Credentials(
+   api_key = <span class="hljs-string">"{apikey}"</span>, 
+   url = <span class="hljs-string">"{watsonx_ai_url}"</span> 
+)
+
+model_inference = ModelInference(
+   model_id    = <span class="hljs-string">"ibm/granite-13b-chat-v2"</span>,
+   params      = { <span class="hljs-string">"max_new_tokens"</span> : <span class="hljs-number">30</span> },
+   credentials = credentials,
+   project_id  = <span class="hljs-string">"{project_id}"</span>
+)
+
+prompt = <span class="hljs-string">"Write short email announcing simply that the cafeteria will be closed today to be decorated for the staff party and be open tomorrow"</span>
+
+result = model.generate_text_stream( prompt = prompt )
+
+<span class="hljs-keyword">for</span> chunk <span class="hljs-keyword">in</span> generated_response:
+   <span class="hljs-built_in">print</span>( chunk, end=<span class="hljs-string">"\n"</span>, flush=<span class="hljs-literal">True</span> )
+
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r1t:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r1t:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                <p>Sample output:</p>
+                <pre class="screen"><code class="language-txt hljs language-plaintext" data-highlighted="yes">The
+ cafe
+t
+eria
+ will
+ be
+ closed
+ today
+ to
+ be
+ decorated
+ for
+ the
+ staff
+ party
+.
+ It
+ will
+ be
+ open
+ tomorrow
+.
+ Thanks
+.
+</code></pre>
+              </md-block>
+            </div>
+            <div class="tab-content" id="tab2-content">
+              <md-block>
+                <p>To do stream generated text, add the following code to the <code>example.js</code> file. Replace <code>{apikey}</code> and <code>{project_id}</code> with your values.</p>
+                <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-bash hljs" data-highlighted="yes">const { IamAuthenticator } = require( <span class="hljs-string">"ibm-cloud-sdk-core"</span> );
+const { WatsonXAI } = require( <span class="hljs-string">"@ibm-cloud/watsonx-ai"</span> );
+
+const authenticator = new IamAuthenticator( {
+   <span class="hljs-string">"apikey"</span> : <span class="hljs-string">"{apikey}"</span>
+} );
+
+async <span class="hljs-keyword">function</span> <span class="hljs-function"><span class="hljs-title">streamText</span></span>()
+{
+    const text_stream = await watsonxAI_service.generateTextStream( {
+       <span class="hljs-string">"input"</span>     : <span class="hljs-string">"Write short email announcing simply that the cafeteria will be closed today to be decorated for the staff party and be open tomorrow"</span>,
+       <span class="hljs-string">"modelId"</span>   : <span class="hljs-string">"google/flan-t5-xxl"</span>,
+       <span class="hljs-string">"parameters"</span>   : { <span class="hljs-string">"max_new_tokens"</span> : 30 },
+       <span class="hljs-string">"returnObject"</span> : <span class="hljs-literal">true</span>,
+       <span class="hljs-string">"projectId"</span>    : <span class="hljs-string">"{project_id}"</span>
+    } );
+ 
+    <span class="hljs-keyword">for</span> await ( const obj of text_stream )
+    {
+      console.log( obj.data.results[0].generated_text );
+    }
+}
+
+streamText();
+
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r20:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r20:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                <p>Sample output:</p>
+                <pre class="screen"><code class="language-txt hljs language-plaintext" data-highlighted="yes">The
+ cafe
+t
+eria
+ will
+ be
+ closed
+ today
+ to
+ be
+ decorated
+ for
+ the
+ staff
+ party
+.
+ It
+ will
+ be
+ open
+ tomorrow
+.
+ Thanks
+.
+
+</code></pre>
+              </md-block>
+            </div>
+            <div class="tab-content" id="tab3-content">
+              <md-block>
+                <p>To stream generated text:</p>
+                <ol class="cds--list--ordered--temporary">
+                  <li class="cds--list__item">
+                    <p>Create a JSON file with the following content. Replace <code>{project_id}</code> with your value.</p>
+                    <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-txt hljs language-plaintext" data-highlighted="yes">{
+"input" : "Write short email announcing simply that the cafeteria will be closed today to be decorated for the staff party and be open tomorrow",
+"model_id" : "google/flan-t5-xxl",
+"parameters": { "max_new_tokens": 30 },
+"project_id" : "&lt;your-project-id&gt;"
+}
+
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r23:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r23:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                  </li>
+                  <li class="cds--list__item">
+                    <p>Run the following curl request. Replace <code>{token}</code> and <code>{JSON-file}</code> with your values.</p>
+                    <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-bash hljs" data-highlighted="yes">curl -X POST                                                     \
+-H <span class="hljs-string">"Authorization: Bearer {token}"</span>                          \
+-H <span class="hljs-string">"Content-Type: application/json"</span>                              \
+&lt;your-service-url&gt;/ml/v1/text/generation_stream?version=2024-05-31 \
+--data <span class="hljs-string">"@{JSON-file}"</span>
+
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r26:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r26:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                  </li>
+                </ol>
+                <p>Sample output:</p>
+                <pre class="screen"><code class="language-txt hljs language-plaintext" data-highlighted="yes">id: 1
+event: message
+data: { "model_id":"google/flan-t5-xxl",
+        "created_at":"2025-03-01T02:50:13.751Z",
+        "results":[ { "generated_text":"",
+                      "generated_token_count":0,
+                      "input_token_count":28,
+                      "stop_reason":"not_finished" } ],
+        "system":{...} }
+
+id: 2
+event: message
+data: { "model_id":"google/flan-t5-xxl",
+        "created_at":"2025-03-01T02:50:13.798Z",
+        "results":[ { "generated_text":"The",
+                      "generated_token_count":1,
+                      "input_token_count":0,
+                      "stop_reason":"not_finished" } ] }
+
+id: 3
+event: message
+data: { "model_id":"google/flan-t5-xxl",
+        "created_at":"2025-03-01T02:50:13.821Z",
+        "results":[ { "generated_text":" cafe",
+                      "generated_token_count":2,
+                      "input_token_count":0,
+                      "stop_reason":"not_finished" } ] }
+
+id: 4
+event: message
+data: { "model_id":"google/flan-t5-xxl",
+        "created_at":"2025-03-01T02:50:13.844Z",
+        "results":[ { "generated_text":"t",
+                      "generated_token_count":3,
+                      "input_token_count":0,
+                      "stop_reason":"not_finished" } ] }
+
+id: 5
+event: message
+data: { "model_id":"google/flan-t5-xxl",
+        "created_at":"2025-03-01T02:50:13.867Z",
+        "results":[ { "generated_text":"eria",
+                      "generated_token_count":4,
+                      "input_token_count":0,
+                      "stop_reason":"not_finished" } ] }
+
+id: 6
+event: message
+data: { "model_id":"google/flan-t5-xxl",
+        "created_at":"2025-03-01T02:50:13.889Z",
+        "results":[ { "generated_text":" will",
+                      "generated_token_count":5,
+                      "input_token_count":0,
+                      "stop_reason":"not_finished" } ] }
+
+...
+
+</code></pre>
+              </md-block>
+            </div>
+          </div>
+        </section>
+        <section id="section-next-steps">
+          <h2 id="next-steps">Next steps<a href="/docs/en/watsonx/saas?topic=hub-stream-text-tutorial#next-steps" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Try your request against another foundation model by changing the value of the <code>model_id</code> parameter. See <a href="/docs/en/SSYOK8/wsj/developer-hub/models.html">List supported models</a>.</li>
+            <li class="cds--list__item">Try another quick start coding tutorial.</li>
+          </ul>
+        </section>
+        <section id="section-learn-more">
+          <h2 id="learn-more">Learn more<a href="/docs/en/watsonx/saas?topic=hub-stream-text-tutorial#learn-more" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item"><a href="https://www.ibm.com/links?url=https%3A%2F%2Fibm.github.io%2Fwatsonx-ai-python-sdk%2Findex.html" target="_blank" class="external">Python library</a></li>
+            <li class="cds--list__item"><a href="https://www.ibm.com/links?url=https%3A%2F%2Fibm.github.io%2Fwatsonx-ai-node-sdk%2Findex.html" target="_blank" class="external">Node.js library</a></li>
+            <li class="cds--list__item"><a href="https://cloud.ibm.com/apidocs/watsonx-ai#introduction" target="_blank" class="external">watsonx.ai REST API</a></li>
+          </ul>
+        </section>
+      </section>

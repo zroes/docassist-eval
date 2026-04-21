@@ -1,0 +1,199 @@
+https://www.ibm.com/docs/en/watsonx/saas?topic=solution-planning-workflow-ml
+<section id="section-planning-the-implementation-workflow-for-your-machine-learning-solution">
+        <h1 id="planning-the-implementation-workflow-for-your-machine-learning-solution">Planning the implementation workflow for your machine learning solution</h1><div id="lastModifiedDate"><span>Last Updated</span>: 2025-12-31</div>
+        <p>When you have a strategy for your machine learning solution, you can plan a workflow that contains the tasks that you need to complete.</p>
+        <p>The following table lists the high-level tasks that you can include in your plan and whether each task is required, recommended, optional, or sometimes required depending on your needs. Some tasks are required in only some situations, but are
+          recommended for all situations.</p>
+        <div class="tablenoborder"><div class="cds--data-table-container"><table class="cds--data-table"><caption caption-side="top" class="cds--data-table-header">Summary of workflow tasks</caption><thead><tr><th><div class="cds--table-header-label">Task</div></th><th><div class="cds--table-header-label">Required?</div></th></tr></thead><tbody><tr><td><a href="#usecase">Define an AI use case</a></td><td>Sometimes, Recommended</td></tr><tr><td><a href="#govwork">Develop governance workflows</a></td><td>Sometimes</td></tr><tr><td><a href="#project">Set up a project</a></td><td>Required</td></tr><tr><td><a href="#prepare">Prepare data</a></td><td>Sometimes</td></tr><tr><td><a href="#experiment">Train your machine learning model</a></td><td>Required</td></tr><tr><td><a href="#evaluate">Evaluate your machine learning model</a></td><td>Sometimes, Recommended</td></tr><tr><td><a href="#deployai">Deploy your solution</a></td><td>Required</td></tr><tr><td><a href="#orchestrate">Automate pipelines</a></td><td>Sometimes</td></tr><tr><td><a href="#monitor">Monitor and maintain your solution</a></td><td>Sometimes, Recommended</td></tr></tbody></table></div></div>
+        <section id="section-usecase">
+          <h2 id="usecase">Defining an AI use case<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#usecase" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>An AI use case consists of a set of factsheets that contain lineage, history, and other relevant information about the lifecycle of an AI asset such as a model.</p>
+          <p>Your organization might require that you track and document your AI solution for transparency or regulatory compliance. However, AI use cases are useful even when they are not required because they provide an integrated way to track progress,
+            decisions, and metrics about your solution.</p>
+          <p>To create an AI use case, first create an inventory, and then create the use case. Add data scientists, data engineers, and other users who are involved in the creation, testing, or governing of your solution as use case collaborators.</p>
+          <section id="section-learn-about-defining-an-ai-use-case">
+            <h3 id="learn-about-defining-an-ai-use-case">Learn about defining an AI use case<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-about-defining-an-ai-use-case" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/xgov-plan.html">Planning for governance</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/xgov-track-ml-model.html">Tracking machine learning models in use cases</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/xgov-inventory-manage.html">Managing AI use cases</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/xgov-use-cases.html">Setting up an AI use case</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-govwork">
+          <h2 id="govwork">Developing governance workflows<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#govwork" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>A governance workflow enforces a review and approval process for AI use cases and model use.</p>
+          <p>Your organization might require one or more of the following types of governance workflows:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Model risk governance workflows to approve AI use cases, approve foundation model lifecycle events, run risk assessments, or automate performance monitoring of models.</li>
+            <li class="cds--list__item">Regulatory compliance management workflows to process alerts published by regulatory agencies.</li>
+            <li class="cds--list__item">Operational risk management workflows to track model risk along with other operational risks across the enterprise.</li>
+          </ul>
+          <p>To set up a governance workflow, you configure it in the Governance console.</p>
+          <section id="section-learn-about-developing-governance-workflows">
+            <h3 id="learn-about-developing-governance-workflows">Learn about developing governance workflows<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-about-developing-governance-workflows" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/xgov-plan.html">Planning for governance</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/svc-watsonxgov/wxgov-console-admin-poweruser.html">Configuring the Governance console</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/svc-watsonxgov/wxgov_mrg_example_workflow.html">Model Risk Governance (MRG) workflows</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-project">
+          <h2 id="project">Setting up a project<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#project" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>A project is a collaborative workspace where people work with models and data to fulfill a shared goal.</p>
+          <p>You need a project to prepare data, run experiments, and build machine learning models.</p>
+          <p>A project for a machine learning solution typically contains the following types of items that are either explicitly added by data scientists or AI engineers or are created as the result of a process:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Connection assets to data sources, such as where you store training data.</li>
+            <li class="cds--list__item">Data assets that represent data sets for training models.</li>
+            <li class="cds--list__item">Notebooks that you create or that are generated by processes such as running an AutoAI experiment.</li>
+            <li class="cds--list__item">Experiment and flow assets that you create from running tools, such as AutoAI, SPSS Modeler, or Decision Optimization.</li>
+            <li class="cds--list__item">Jobs that are created by running assets in tools.</li>
+          </ul>
+          <p>You have an automatically created sandbox project. However, you might want to create a project with a name that reflects your goal. You can create a project from the home page or from the navigation menu. Add everyone who you want to work on
+            the solution. You assign a role to each collaborator to control their permissions in the project.</p>
+          <section id="section-learn-more-about-creating-projects">
+            <h3 id="learn-more-about-creating-projects">Learn more about creating projects<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-creating-projects" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/projects.html">Create the project</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/collaborate.html">Add collaborators</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/assets.html">Assets</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-prepare">
+          <h2 id="prepare">Preparing your data<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#prepare" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>Data preparation involves providing access to the required data in the format and at the quality level that your solution needs.</p>
+          <p>You need to provide the training data for your machine learning model. Your training data must include labeled data for the column to predict or classify with a machine learning algorithm. You can also provide unlabeled holdout data set or backtest
+            data sets. You might need to cleanse or shape your data to prepare it for analysis and model training.</p>
+          <p>You can provide training data in the following ways:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Upload a file from your local system</li>
+            <li class="cds--list__item">Connect to the data source that contains the data set</li>
+          </ul>
+          <p>You can prepare your data with data preparation tools and then use that data in other tools such as AutoAI or notebooks:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Upload your data files or connect to tables in your data sources.</li>
+            <li class="cds--list__item">Cleanse, shape, and visualize your data with Data Refinery.</li>
+            <li class="cds--list__item">Generate synthetic tabular data based on production data or a custom data schema with Synthetic Data Generator.</li>
+          </ul>
+          <p>You can prepare your data within the same tool that you train the machine learning model:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Cleanse, transform, reduce, integrate, and validate your data within SPSS Modeler.</li>
+            <li class="cds--list__item">Call preinstalled open source and IBM libraries or install and call custom libraries in notebooks.</li>
+          </ul>
+          <section id="section-learn-more-about-preparing-data">
+            <h3 id="learn-more-about-preparing-data">Learn more about preparing data<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-preparing-data" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/manage-data/add-data-project.html">Adding data to a project</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/refinery/refining_data.html">Refining data</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/synthetic/sdg-overview-wx.html">Generating structured data</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsd/data.html">Understanding and preparing data with SPSS Modeler</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-experiment">
+          <h2 id="experiment">Train your machine learning model<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#experiment" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>A machine learning model is trained on a set of data to develop algorithms that it can use to analyze and learn from new data.</p>
+          <p>You can experiment with training your machine learning model by altering conditions in the following ways:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Testing different algorithms to best fit your data</li>
+            <li class="cds--list__item">Selecting and scaling features to best represent the problem</li>
+            <li class="cds--list__item">Adjusting hyperparameter settings to optimize performance and accuracy</li>
+          </ul>
+          <p>To build a machine learning model, you can experiment with Python code in notebooks. To automate finding the algorithms, transformations, and parameter settings to create the best predictive model, run an Auto AI for machine learning experiment.
+            To explore your data, model outcomes, try different models, and investigate relationships to find useful information, build an SPSS Modeler flow. To solve an optimization business problem, build a Decision Optimization model.</p>
+          <section id="section-learn-more-about-training-machine-learning-models">
+            <h3 id="learn-more-about-training-machine-learning-models">Learn more about training machine learning models<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-training-machine-learning-models" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/notebooks-and-scripts.html">Notebooks and scripts</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/autoai-overview.html">AutoAI for machine learning</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsd/spss-modeler.html">SPSS Modeler</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/DO/DOWS-Cloud_home.html">Decision Optimization</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-evaluate">
+          <h2 id="evaluate">Evaluating your machine learning assets<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#evaluate" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>An evaluation of a machine learning model tests the quality of the model output for the set of metrics that you choose. Some metrics are based on comparing model output against the appropriate output that you provide in the testing data set.
+            How efficiently your model generates responses is also evaluated.</p>
+          <p>Your organization might require evaluations for regulatory compliance or internal policies. However, evaluations are useful even when they are not required because the metric scores can indicate the quality of your solution and might predict
+            decreased user satisfaction when scores drop.</p>
+          <p>When you evaluate an AI asset, you can configure the following factors:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">The sample size to test</li>
+            <li class="cds--list__item">Which metrics to include</li>
+            <li class="cds--list__item">The threshold value for each metric</li>
+          </ul>
+          <p>General metrics provide the following types of information about the machine learning model:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">How well the model performs compared to a labeled test set.</li>
+            <li class="cds--list__item">Whether the model produces biased outcomes.</li>
+            <li class="cds--list__item">Changes in accuracy and data.</li>
+            <li class="cds--list__item">How efficiently the model processes transactions.</li>
+          </ul>
+          <p>You view the current results and the results over time. The results of each evaluation are added to the use case for the prompt.</p>
+          <p>To evaluate a machine learning model, open the <strong>Insights</strong> dashboard from Watson OpenScale. If you run an AutoAI for machine learning experiment, the candidate models are evaluated and ranked automatically.</p>
+          <section id="section-learn-more-about-evaluating-machine-learning-assets">
+            <h3 id="learn-more-about-evaluating-machine-learning-assets">Learn more about evaluating machine learning assets<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-evaluating-machine-learning-assets" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/model/getting-started.html">Evaluating AI assets</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-deployai">
+          <h2 id="deployai">Deploying your solution<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#deployai" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>Deploying an asset makes it available for testing or for productive use by an endpoint. After you create deployments, you can test and manage them, and prepare your assets to deploy into pre-production and production environments.</p>
+          <p>You create deployments in deployment spaces, which are separate workspaces from projects and to which you can add a different set of collaborators.</p>
+          <p>To deploy machine learning model assets, you promote the asset to a deployment space and create a deployment that contains an endpoint. You can then call the endpoint from your application. You can create separate deployment spaces for testing,
+            staging, and production deployments to support your ModelOps workflow.</p>
+          <section id="section-learn-more-about-deploying-ai-assets">
+            <h3 id="learn-more-about-deploying-ai-assets">Learn more about deploying AI assets<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-deploying-ai-assets" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/get-started-openscale.html">Deploying a machine learning asset</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/DO/wml_cpd_home.html">Deploying a Decision Optimization model</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/modelops-overview.html">Managing the AI lifecycle with ModelOps</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-orchestrate">
+          <h2 id="orchestrate">Automating machine learning pipelines<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#orchestrate" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>After you train and deploy your machine learning model, you can automate the process of training, deploying, and evaluating the model. You can compare the results of mulitple machine learning models to determine the best one. You can configure
+            automated batch scoring at scale.</p>
+          <p>You can configure a pipeline to perform the following tasks:</p>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Add assets to your pipeline or to export pipeline assets</li>
+            <li class="cds--list__item">Create or delete assets, deployments, or deployment spaces</li>
+            <li class="cds--list__item">Add error handling and logic, such as loops</li>
+            <li class="cds--list__item">Set user variables</li>
+            <li class="cds--list__item">Replace or update assets to improve performance</li>
+            <li class="cds--list__item">Run a job to train an experiment, execute a script, or run a data flow</li>
+            <li class="cds--list__item">Specify conditions for running the flow</li>
+            <li class="cds--list__item">Run a script that you write</li>
+          </ul>
+          <p>To design a pipeline, drag nodes onto the Pipelines editor canvas, specify objects and parameters, then run and monitor the pipeline.</p>
+          <section id="section-learn-more-about-machine-learning-pipelines">
+            <h3 id="learn-more-about-machine-learning-pipelines">Learn more about machine learning pipelines<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-machine-learning-pipelines" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/ml-orchestration-overview.html">Orchestrating tasks with Orchestration Pipelines</a></li>
+            </ul>
+          </section>
+        </section>
+        <section id="section-monitor">
+          <h2 id="monitor">Monitoring and maintaining your solution<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#monitor" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>After you embed your solution into your application and put it into production, you must maintain your solution. You can also monitor model performance. Maintaining your solution can include retraining your machine learning model with recent
+            data. Monitoring your solution evaluates the performance of the model in your production environment.</p>
+          <p>Your organization might require you to monitor your solution and ensure that performance does not fall below specified thresholds.</p>
+          <p>To monitor your solution, open the deployment of your solution in the deployment space and activate evaluations. You can use the payload logging endpoint to send scoring requests for fairness and drift evaluations and use the feedback logging
+            endpoint to provide feedback data for quality evaluations.</p>
+          <section id="section-learn-more-about-monitoring-and-maintaining-your-solution">
+            <h3 id="learn-more-about-monitoring-and-maintaining-your-solution">Learn more about monitoring and maintaining your solution<a href="/docs/en/watsonx/saas?topic=solution-planning-workflow-ml#learn-more-about-monitoring-and-maintaining-your-solution" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h3>
+            <ul class="cds--list--unordered">
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/ml-deploy-manage-monitor.html">Evaluating deployments in spaces</a></li>
+              <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/model/wos-send-model-transactions.html">Sending model transactions</a></li>
+            </ul>
+          </section>
+        </section>
+      </section>

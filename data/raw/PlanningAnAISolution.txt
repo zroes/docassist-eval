@@ -1,0 +1,26 @@
+https://www.ibm.com/docs/en/watsonx/saas?topic=planning-ai-solution
+<section id="section-planning-an-ai-solution">
+        <h1 id="planning-an-ai-solution">Planning an AI solution</h1><div id="lastModifiedDate"><span>Last Updated</span>: 2025-10-23</div>
+        <p>To create a generative AI or machine learning solution that is scalable, cost-effective, high quality, and ethical, you need to make a plan.</p>
+        <p>When you are ready to create a plan for your AI solution, you can use the following types of information to set your strategy, plan your workflow, choose your tools and working methods, and understand solution patterns:</p>
+        <dl>
+          <dt><strong>Strategic decisions</strong></dt>
+          <dd>Understand all the factors that you need to consider to make decisions and the possible risks of ignoring factors or changing your decisions later.</dd>
+          <dt><strong>Workflow</strong></dt>
+          <dd>Understand the overall process of creating a generative AI or machine learning solution so that you can decide which tasks that you need to complete.</dd>
+          <dt><strong>Comparisons</strong></dt>
+          <dd>Understand the features, benefits, and costs of the multiple methods of achieving the same high-level task so that you can choose the best method for your solution.</dd>
+          <dt><strong>Solution patterns</strong></dt>
+          <dd>Explore the solution for a realistic enterprise use case with an architecture diagram of the solution, the overall process of solving the use case, and the specific tools and methods used.</dd>
+        </dl>
+        <section id="section-learn-more">
+          <h2 id="learn-more">Learn more<a href="/docs/en/watsonx/saas?topic=planning-ai-solution#learn-more" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/plan-initial.html">Initial strategic decisions</a></li>
+            <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/plan-compare-methods.html">Comparison of tools to code</a></li>
+            <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/plan-workflow.html">Planning your gen AI workflow</a></li>
+            <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/plan-workflow-ml.html">Planning your ML workflow</a></li>
+            <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/getting-started/plan-solution-rag.html">Solution pattern for answering questions with retrieval-augmented generation</a></li>
+          </ul>
+        </section>
+      </section>

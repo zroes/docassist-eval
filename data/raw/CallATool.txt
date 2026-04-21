@@ -1,0 +1,418 @@
+https://www.ibm.com/docs/en/watsonx/saas?topic=hub-call-tool-tutorial
+<section id="section-quick-code-tutorial-call-a-tool">
+        <h1 id="quick-code-tutorial-call-a-tool">Quick code tutorial: Call a tool</h1><div id="lastModifiedDate"><span>Last Updated</span>: 2025-11-08</div>
+        <p>You can call a tool with an agent programmatically with the watsonx.ai API and SDKs.</p>
+        <p>This tutorial demonstrates calling a tool with a foundation model. Work with Python, Node.js, or Curl. This example uses the <code>mistralai/mistral-large</code> foundation model, which supports text generation and tool calling. The model is provided
+          with a tool called <code>add</code> and a message with the question “What is 2 plus 4?“. The response of the model is a message that contains the tool that is called and the method of calling that tool.</p>
+        <p><img src="/docs/en/SSYOK8/wsj/developer-hub/images/stopwatch.png" alt="alt=&quot;&quot;" height="20"> You can complete this tutorial in less than 5 minutes.</p>
+        <dl>
+          <dt><strong>Detailed information</strong></dt>
+          <dd><a href="/docs/en/SSYOK8/wsj/analyze-data/fm-agents-overview.html">Automating tasks with AI agents</a></dd>
+          <dd><a href="/docs/en/SSYOK8/wsj/analyze-data/fm-api-chat-tools.html">Building agent-driven workflows with the chat API</a></dd>
+          <dd><a href="/docs/en/SSYOK8/wsj/analyze-data/fm-model-choose.html#tasks">Foundation models that support your use case</a></dd>
+        </dl>
+        <section id="section-prerequisite">
+          <h2 id="prerequisite">Prerequisite<a href="/docs/en/watsonx/saas?topic=hub-call-tool-tutorial#prerequisite" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <p>Complete the one-time steps to gather your credentials and other information and prepare your system. See <a href="/docs/en/SSYOK8/wsj/developer-hub/quickstart.html#prereq">Prerequisite one-time tasks</a>.</p>
+        </section>
+        <section id="section-call-a-tool">
+          <h2 id="call-a-tool">Call a tool<a href="/docs/en/watsonx/saas?topic=hub-call-tool-tutorial#call-a-tool" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <style>
+            * {
+              font-family: 'IBM Plex Sans', sans-serif;
+            }
+            
+            .tabs {
+              margin: 0 auto;
+            }
+            /* Hide radio buttons */
+            
+            .tabs input[type="radio"] {
+              display: none;
+            }
+            /* Container for labels */
+            
+            .tab-labels {
+              display: inline-flex;
+              margin-bottom: 0;
+              border: 1px solid black;
+              border-radius: 6px;
+            }
+            
+            .tab-labels label {
+              width: 100px;
+              cursor: pointer;
+              padding: 5px 15px;
+            }
+            
+            .tab-labels label:first-child {
+              border-radius: 4px 0 0 4px;
+            }
+            
+            .tab-labels label:last-child {
+              border-radius: 0 4px 4px 0;
+            }
+            
+            .tab-labels label:not(:last-child) {
+              border-right: 1px solid black;
+            }
+            /* Active tab label */
+            
+            #tab1:checked~.tab-labels label[for="tab1"],
+            #tab2:checked~.tab-labels label[for="tab2"],
+            #tab3:checked~.tab-labels label[for="tab3"] {
+              background: black;
+              color: white;
+            }
+            /* Hide all content by default */
+            
+            .tab-content {
+              display: none;
+              padding: 15px;
+            }
+            /* Show content for checked tab */
+            
+            #tab1:checked~#tab1-content,
+            #tab2:checked~#tab2-content,
+            #tab3:checked~#tab3-content {
+              display: block;
+            }
+          </style>
+          <div class="tabs">
+            
+            <input type="radio" id="tab1" name="tabset" checked="">
+            <input type="radio" id="tab2" name="tabset">
+            <input type="radio" id="tab3" name="tabset">
+            
+            <div class="tab-labels">
+              <label for="tab1">Python</label>
+              <label for="tab2">Node.js</label>
+              <label for="tab3">Curl</label>
+            </div>
+            
+            <div class="tab-content" id="tab1-content">
+              <md-block>
+                <p>To call a tool with a foundation model:</p>
+                <ol class="cds--list--ordered--temporary">
+                  <li class="cds--list__item">
+                    <p>Add the following code to the <code>example.py</code> file and run the code. Replace <code>{watsonx_ai_url}</code>, <code>{apikey}</code>, and <code>{project_id}</code> with your values.</p>
+                    <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-python hljs" data-highlighted="yes"><span class="hljs-keyword">from</span> ibm_watsonx_ai <span class="hljs-keyword">import</span> APIClient
+<span class="hljs-keyword">from</span> ibm_watsonx_ai <span class="hljs-keyword">import</span> Credentials
+<span class="hljs-keyword">from</span> ibm_watsonx_ai.foundation_models <span class="hljs-keyword">import</span> ModelInference
+
+credentials = Credentials(
+   url = <span class="hljs-string">"{watsonx_ai_url}"</span>,
+   api_key = <span class="hljs-string">"{apikey}"</span>
+)
+
+client = APIClient(credentials)
+
+params = {
+   <span class="hljs-string">"time_limit"</span>: <span class="hljs-number">1000</span>,
+   <span class="hljs-string">"max_new_token"</span>: <span class="hljs-number">300</span>
+}
+
+model_id = <span class="hljs-string">"mistralai/mistral-large"</span>
+project_id = <span class="hljs-string">"{project_id}"</span>
+space_id = <span class="hljs-literal">None</span> <span class="hljs-comment"># optional</span>
+verify = <span class="hljs-literal">False</span>
+
+model = ModelInference(
+model_id=model_id,
+api_client=client,
+params=params,
+project_id=project_id,
+space_id=space_id,
+verify=verify,
+)
+
+messages = [
+   {
+      <span class="hljs-string">"role"</span>: <span class="hljs-string">"user"</span>,
+      <span class="hljs-string">"content"</span>: [
+            {
+               <span class="hljs-string">"type"</span>: <span class="hljs-string">"text"</span>,
+               <span class="hljs-string">"text"</span>: <span class="hljs-string">"What is 2 plus 4?"</span>
+            }
+      ]
+   }
+]
+
+tools = [
+   {
+      <span class="hljs-string">"type"</span>: <span class="hljs-string">"function"</span>,
+      <span class="hljs-string">"function"</span>: {
+            <span class="hljs-string">"name"</span>: <span class="hljs-string">"add"</span>,
+            <span class="hljs-string">"description"</span>: <span class="hljs-string">"Adds the values a and b to get a sum."</span>,
+            <span class="hljs-string">"parameters"</span>: {
+               <span class="hljs-string">"type"</span>: <span class="hljs-string">"object"</span>,
+               <span class="hljs-string">"properties"</span>: {
+                  <span class="hljs-string">"a"</span>: {
+                        <span class="hljs-string">"description"</span>: <span class="hljs-string">"A number value"</span>,
+                        <span class="hljs-string">"type"</span>: <span class="hljs-string">"number"</span>
+                  },
+                  <span class="hljs-string">"b"</span>: {
+                        <span class="hljs-string">"description"</span>: <span class="hljs-string">"A number value"</span>,
+                        <span class="hljs-string">"type"</span>: <span class="hljs-string">"number"</span>
+                  }
+               },
+               <span class="hljs-string">"required"</span>: [
+                  <span class="hljs-string">"a"</span>,
+                  <span class="hljs-string">"b"</span>
+               ]
+            }
+      }
+   }
+]
+
+<span class="hljs-built_in">print</span>(model.chat(messages=messages, tools=tools))
+
+<span class="hljs-built_in">print</span>( json.dumps( result[<span class="hljs-string">"choices"</span>][<span class="hljs-number">0</span>], indent=<span class="hljs-number">3</span> ) )
+
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r1t:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r1t:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                  </li>
+                </ol>
+              </md-block>
+            </div>
+            <div class="tab-content" id="tab2-content">
+              <md-block>
+                <p>To call a tool with a foundation model:</p>
+                <ol class="cds--list--ordered--temporary">
+                  <li class="cds--list__item">
+                    <p>Add the following code to the <code>example.js</code> file and run the code. Replace <code>{apikey}</code> and <code>{project_id}</code> with your values.</p>
+                    <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-bash hljs" data-highlighted="yes">const { WatsonXAI } = require(<span class="hljs-string">'@ibm-cloud/watsonx-ai'</span>);
+
+process.env.IBM_CREDENTIALS_FILE = <span class="hljs-string">'./.env'</span>; // Your file with the apikey
+
+const watsonxAIService = WatsonXAI.newInstance({
+version: <span class="hljs-string">'2024-05-31'</span>,
+serviceUrl: <span class="hljs-string">'{watsonx_ai_url}'</span>,
+});
+
+const params = {
+modelId: <span class="hljs-string">'mistralai/mistral-large'</span>,
+projectId: <span class="hljs-string">'{project_id}'</span>,
+maxTokens: 100,
+};
+
+const messages = [
+{
+   role: <span class="hljs-string">'user'</span>,
+   content: [
+      {
+      <span class="hljs-built_in">type</span>: <span class="hljs-string">'text'</span>,
+      text: <span class="hljs-string">'What is 2 plus 4?'</span>,
+      },
+   ],
+},
+];
+
+const tools = [
+{
+   <span class="hljs-built_in">type</span>: <span class="hljs-string">'function'</span>,
+   <span class="hljs-keyword">function</span>: {
+      name: <span class="hljs-string">'add'</span>,
+      description: <span class="hljs-string">'Adds the values a and b to get a sum.'</span>,
+      parameters: {
+      <span class="hljs-built_in">type</span>: <span class="hljs-string">'object'</span>,
+      properties: {
+         a: {
+            description: <span class="hljs-string">'A number value'</span>,
+            <span class="hljs-built_in">type</span>: <span class="hljs-string">'number'</span>,
+         },
+         b: {
+            description: <span class="hljs-string">'A number value'</span>,
+            <span class="hljs-built_in">type</span>: <span class="hljs-string">'number'</span>,
+         },
+      },
+      required: [<span class="hljs-string">'a'</span>, <span class="hljs-string">'b'</span>],
+      },
+   },
+},
+];
+
+try {
+watsonxAIService
+   .textChat({ messages, tools, ...params })
+   .<span class="hljs-keyword">then</span>(async ({ result }) =&gt; {
+      console.log({ response: result.choices?.[0].message });
+   });
+} catch (err) {
+console.warn(err);
+}
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r20:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r20:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                  </li>
+                </ol>
+              </md-block>
+            </div>
+            <div class="tab-content" id="tab3-content">
+              <md-block>
+                <p>To call a tool with a foundation model:</p>
+                <ol class="cds--list--ordered--temporary">
+                  <li class="cds--list__item">
+                    <p>Create a JSON file with the following content. Replace <code>{project_id}</code> with your value.</p>
+                    <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-txt hljs language-plaintext" data-highlighted="yes">{
+"messages" : [
+{ "role" : "user",
+   "content" : [
+      { "type" : "text",
+      "text" : "What is 2 plus 4?"
+      } ]
+}
+],
+"tools" : [
+   { "type" : "function",
+      "function" : {
+         "name" : "add",
+         "description" : "Adds the values a and b to get a sum.",
+         "parameters" : {
+            "type" : "object",
+            "required": [ "a", "b" ],
+            "properties" : {
+               "a" : { "description" : "A number value", "type" : "number" },
+               "b" : { "description" : "A number value", "type" : "number" } }
+         }
+      }
+   }
+],
+"model_id" : "mistralai/mistral-large",
+"project_id" : "{project_id}"
+}
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r23:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r23:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                  </li>
+                  <li class="cds--list__item">
+                    <p>Run the following curl request. Replace <code>{token}</code> and <code>{JSON-file}</code> with your values.</p>
+                    <div class="cds--snippet docs--snippet-v10 cds--snippet--multi cds--snippet--expand"><div class="cds--snippet-container" tabindex="0" aria-label="Code snippet"><pre class="codeblock"><code class="language-bash hljs" data-highlighted="yes">curl -X POST \
+-H <span class="hljs-string">"Authorization: Bearer {token}"</span> \
+-H <span class="hljs-string">"Content-Type: application/json"</span> \
+<span class="hljs-string">"{watsonx_ai_url}/ml/v1/text/chat?version=2024-05-31"</span> \
+--data-raw <span class="hljs-string">'{
+   "model_id": "mistralai/mistral-large",
+   "project_id": "{project_id}",
+   "messages": [{
+      "role": "user",
+      "content": [{
+            "type": "text",
+            "text": "What is 2 plus 4?"
+      }]
+   }],
+   "tools": [{
+      "type": "function",
+      "function": {
+            "name": "add",
+            "description": "Adds the values a and b to get a sum.",
+            "parameters": {
+               "type": "object",
+               "properties": {
+                  "a": {
+                        "description": "A number value",
+                        "type": "number"
+                  },
+                  "b": {
+                        "description": "A number value",
+                        "type": "number"
+                  }
+               },
+               "required": [
+                  "a",
+                  "b"
+               ]
+            }
+      }
+   }],
+   "tool_choice_option": "auto",
+   "max_tokens": 300,
+   "time_limit": 1000
+}'</span>
+</code></pre></div><div class="docs--copy-btn"><div class="cds--layout-constraint--size__default-md cds--layout-constraint--size__max-lg"><span class="cds--popover-container cds--popover--caret cds--popover--high-contrast cds--popover--left cds--tooltip cds--icon-tooltip"><div class="cds--tooltip-trigger__wrapper"><button aria-labelledby="tooltip-:r26:" class="cds--btn--icon-only cds--copy-btn cds--copy cds--btn cds--btn--sm cds--layout--size-sm cds--btn--primary" type="button"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" class="cds--snippet__icon" xmlns="http://www.w3.org/2000/svg"><path d="M28,10V28H10V10H28m0-2H10a2,2,0,0,0-2,2V28a2,2,0,0,0,2,2H28a2,2,0,0,0,2-2V10a2,2,0,0,0-2-2Z"></path><path d="M4,18H2V4A2,2,0,0,1,4,2H18V4H4Z"></path></svg></button></div><span aria-hidden="true" id="tooltip-:r26:" role="tooltip" class="cds--popover"><span class="cds--popover-content cds--tooltip-content">Copy to clipboard</span><span class="cds--popover-caret"></span></span></span></div></div></div>
+                  </li>
+                </ol>
+              </md-block>
+            </div>
+          </div>
+          <p>Sample JSON response:</p>
+          <pre class="screen"><code class="language-txt hljs language-plaintext" data-highlighted="yes">{
+"id": "chat-a00942a130e84f83bc0090c38c2f419f",
+"model_id": "mistralai/mistral-large",
+"choices": [
+   {
+      "index": 0,
+      "message": {
+      "role": "assistant",
+      "tool_calls": [
+         {
+            "id": "chatcmpl-tool-77cbe4e94d88489383a0c6ed1b644674",
+            "type": "function",
+            "function": {
+            "name": "add",
+            "arguments": "{\"a\": 2, \"b\": 4}"
+            }
+         }
+      ]
+      },
+      "finish_reason": "tool_calls"
+   }
+]
+}
+</code></pre>
+          <ol start="2" class="cds--list--ordered--temporary">
+            <li class="cds--list__item">
+              <p>Call a function called <code>add</code> with the arguments {a: 2, b: 4}. The function returns the sum of the two numbers, which is 6. This value must be passed to the model as part of the next message, together with the tool call identifier.
+                The message object might look like the following sample:</p>
+              <pre class="screen"><code class="language-txt hljs language-plaintext" data-highlighted="yes">[
+{
+   "role": "user",
+   "content": [
+      {
+      "type": "text",
+      "text": "What is 2 plus 4?"
+      }
+   ]
+},
+{
+   "role": "assistant",
+   "tool_calls": [
+      {
+      "id": "chatcmpl-tool-77cbe4e94d88489383a0c6ed1b644674",
+      "type": "function",
+      "function": {
+         "name": "add",
+         "arguments": "{\"a\": 2, \"b\": 4}"
+      }
+      }
+   ]
+},
+{
+   "role": "tool",
+   "tool_call_id": "chatcmpl-tool-77cbe4e94d88489383a0c6ed1b644674",
+   "content": [
+      {
+      "type": "text",
+      "text": "6"
+      }
+   ]
+}
+]
+</code></pre>
+            </li>
+          </ol>
+          <p>The model responds with a natural language answer that includes the response of the tool call.</p>
+        </section>
+        <section id="section-next-steps">
+          <h2 id="next-steps">Next steps<a href="/docs/en/watsonx/saas?topic=hub-call-tool-tutorial#next-steps" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item">Try your request against another foundation model by changing the value of the <code>model_id</code> parameter. See <a href="/docs/en/SSYOK8/wsj/developer-hub/models.html">List supported models</a>.</li>
+            <li class="cds--list__item">Try another quick start coding tutorial.</li>
+            <li class="cds--list__item">Try the <a href="/docs/en/SSYOK8/wsj/getting-started/get-started-dev-agent.html">Build and deploy an agent tutorial</a>.</li>
+          </ul>
+        </section>
+        <section id="section-learn-more">
+          <h2 id="learn-more">Learn more<a href="/docs/en/watsonx/saas?topic=hub-call-tool-tutorial#learn-more" title="Copy to clipboard" class="header-link-to-clipboard"><svg focusable="false" preserveAspectRatio="xMidYMid meet" fill="currentColor" width="16" height="16" viewBox="0 0 32 32" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path d="M29.25,6.76a6,6,0,0,0-8.5,0l1.42,1.42a4,4,0,1,1,5.67,5.67l-8,8a4,4,0,1,1-5.67-5.66l1.41-1.42-1.41-1.42-1.42,1.42a6,6,0,0,0,0,8.5A6,6,0,0,0,17,25a6,6,0,0,0,4.27-1.76l8-8A6,6,0,0,0,29.25,6.76Z"></path><path d="M4.19,24.82a4,4,0,0,1,0-5.67l8-8a4,4,0,0,1,5.67,0A3.94,3.94,0,0,1,19,14a4,4,0,0,1-1.17,2.85L15.71,19l1.42,1.42,2.12-2.12a6,6,0,0,0-8.51-8.51l-8,8a6,6,0,0,0,0,8.51A6,6,0,0,0,7,28a6.07,6.07,0,0,0,4.28-1.76L9.86,24.82A4,4,0,0,1,4.19,24.82Z"></path></svg></a></h2>
+          <ul class="cds--list--unordered">
+            <li class="cds--list__item"><a href="https://www.ibm.com/links?url=https%3A%2F%2Fibm.github.io%2Fwatsonx-ai-python-sdk%2Findex.html" target="_blank" class="external">Python library</a></li>
+            <li class="cds--list__item"><a href="https://www.ibm.com/links?url=https%3A%2F%2Fibm.github.io%2Fwatsonx-ai-node-sdk%2Findex.html" target="_blank" class="external">Node.js library</a></li>
+            <li class="cds--list__item"><a href="https://cloud.ibm.com/apidocs/watsonx-ai#introduction" target="_blank" class="external">watsonx.ai REST API</a></li>
+            <li class="cds--list__item"><a href="/docs/en/SSYOK8/wsj/analyze-data/fm-agents-overview.html">Automating tasks with AI agents</a></li>
+          </ul>
+        </section>
+      </section>
