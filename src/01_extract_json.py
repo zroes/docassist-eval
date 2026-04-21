@@ -51,10 +51,10 @@ for file_path in txt_files:
     }
     
     # 8. Save as a JSON file
-    json_filename = file_path.replace(".txt", ".json").replace("raw", "processed")
+    json_filename = file_path.replace(".txt", ".json")
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(doc_data, f, indent=4)
         
-    print(f"Saved perfectly formatted JSON to {json_filename}")
+    print(f"Saved formatted JSON to {json_filename}")
 
 print("\nAll data structured! Layer 1 is officially complete.")
