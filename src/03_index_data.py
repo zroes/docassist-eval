@@ -53,7 +53,7 @@ def index_chunks_to_chroma(chunks):
     print(f"Adding {len(documents)} chunks to the Vector Database. This might take a minute...")
     
     # Adds our 3 lists to the chromadb database
-    # collection.add(ids=ids, documents=documents, metadatas=metadatas)
+    collection.add(ids=ids, documents=documents, metadatas=metadatas)
     
     print("Indexing complete!")
 
