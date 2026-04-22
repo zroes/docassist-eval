@@ -4,7 +4,7 @@ import json
 from bs4 import BeautifulSoup
 
 # Find all the text files you created
-txt_files = glob.glob("../data/raw/*.txt")
+txt_files = glob.glob("../data/raw/text/*.txt")
 print(txt_files)
 
 for file_path in txt_files:
@@ -51,7 +51,7 @@ for file_path in txt_files:
     }
     
     # 8. Save as a JSON file
-    json_filename = file_path.replace(".txt", ".json")
+    json_filename = file_path.replace(".txt", ".json").replace("/text/", "/json/")
     with open(json_filename, "w", encoding="utf-8") as f:
         json.dump(doc_data, f, indent=4)
         
