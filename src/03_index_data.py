@@ -22,7 +22,7 @@ def index_chunks_to_chroma(chunks):
     """
     print("Initializing ChromaDB...")
     # This creates a local folder called 'chroma_db' in the project
-    client = chromadb.PersistentClient(path="./chroma_db")
+    client = chromadb.PersistentClient(path="../chroma_db")
     
     # Create a collection (think of this like a table in a database)
     collection = client.get_or_create_collection(name="watsonx_docs")
@@ -53,7 +53,7 @@ def index_chunks_to_chroma(chunks):
     print(f"Adding {len(documents)} chunks to the Vector Database. This might take a minute...")
     
     # Adds our 3 lists to the chromadb database
-    collection.add(ids=ids, documents=documents, metadatas=metadatas)
+    # collection.add(ids=ids, documents=documents, metadatas=metadatas)
     
     print("Indexing complete!")
 
