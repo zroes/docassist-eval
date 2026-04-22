@@ -38,7 +38,7 @@ def process_documents():
              # - text (the chunk string)
          e. Convert that new dictionary to a JSON string and write it to the .jsonl file
     """
-    raw_json_files = glob.glob("../data/raw/*.json")
+    raw_json_files = glob.glob("../data/raw/json/*.json")
     output_file = "../data/processed/chunks.jsonl"
 
     total_chunks_created = 0
