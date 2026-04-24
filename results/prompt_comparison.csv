@@ -1,0 +1,401 @@
+question,prompt_version,retrieved_docs,answer
+What are the main components and steps to implement a Retrieval-Augmented Generation (RAG) pattern solution?,plain,"Solution pattern for answering questions with retrieval-augmented generation, Solution pattern for answering questions with retrieval-augmented generation, Solution pattern for answering questions with retrieval-augmented generation","A Retrieval-Augmented Generation (RAG) pattern solution typically includes the following main components:
+
+**Main Components:**
+*   A knowledge base containing the source documents.
+*   An embedding model to convert document text into vector embeddings.
+*   A vector database to store vector embeddings and a vector index for content retrieval.
+*   A prompt template that combines the user question, retrieved content, and instructions.
+*   A foundation model to generate answers based on the retrieved content.
+
+**Optional Components:**
+*   An app with a user interface for questions, answers, and feedback.
+*   A reranking model to reorder retrieved results for better relevance.
+*   A log of questions, answers, and user feedback.
+*   A method for delivering feedback to documentation writers.
+
+To implement a RAG pattern solution, follow these main steps:
+
+**Implementation Steps:**
+1.  Set up a vector database.
+2.  Create a vector index.
+3.  Specify the vector index in the prompt.
+4.  Evaluate the prompt.
+5.  Add optional components.
+6.  Deploy the pattern as an AI service.
+7.  Call the AI service endpoint in your application."
+What are the main components and steps to implement a Retrieval-Augmented Generation (RAG) pattern solution?,grounded,"Solution pattern for answering questions with retrieval-augmented generation, Solution pattern for answering questions with retrieval-augmented generation, Solution pattern for answering questions with retrieval-augmented generation","The main components of a Retrieval-Augmented Generation (RAG) pattern solution typically include:
+*   A knowledge base that contains the source documents.
+*   An embedding model that converts text into vector embeddings.
+*   A vector database that stores vector embeddings and a vector index for content retrieval.
+*   A prompt template that combines the user question, retrieved content, and instructions.
+*   A foundation model that generates an answer based on retrieved content. (Title: Solution pattern for answering questions with retrieval-augmented generation)
+
+A completed solution might also include an app with a user interface, a reranking model, a log of questions, answers, and user feedback, and a method of delivering feedback to documentation writers. (Title: Solution pattern for answering questions with retrieval-augmented generation)
+
+To implement a RAG pattern solution, the main steps are:
+*   Set up a vector database.
+*   Create a vector index.
+*   Specify the vector index in the prompt.
+*   Evaluate the prompt.
+*   Add optional components.
+*   Deploy the pattern as an AI service.
+*   Call the AI service endpoint in your application. (Title: Solution pattern for answering questions with retrieval-augmented generation)"
+What are the key stages in the implementation workflow for a generative AI solution?,plain,"Planning an AI solution, Planning an AI solution, Planning the implementation workflow for your generative AI solution","According to the provided context, the key stages or high-level tasks that can be included in the implementation workflow for a generative AI solution are:
+
+*   Define an AI use case
+*   Develop governance workflows
+*   Set up a project
+*   Prepare data
+*   Experiment with gen AI
+*   Evaluate your gen AI assets
+*   Optimize a foundation model
+*   Deploy your solution
+*   Monitor and maintain your solution"
+What are the key stages in the implementation workflow for a generative AI solution?,grounded,"Planning an AI solution, Planning an AI solution, Planning the implementation workflow for your generative AI solution","The key stages in the implementation workflow for a generative AI solution include:
+*   Define an AI use case
+*   Develop governance workflows
+*   Set up a project
+*   Prepare data
+*   Experiment with gen AI
+*   Evaluate your gen AI assets
+*   Optimize a foundation model
+*   Deploy your solution
+*   Monitor and maintain your solution (Title: Planning the implementation workflow for your generative AI solution)"
+What is the difference between working with tools versus writing custom code for foundation models?,plain,"Comparison of working with tools and code, Planning the implementation workflow for your generative AI solution, Planning the implementation workflow for your generative AI solution","Based on the provided context, the tasks you can complete with tools in the user interface and with REST API code are ""mostly the same."" You can also complete some tasks with Python code.
+
+Here's a breakdown from the context:
+
+*   **Most tasks are shared:** For many functionalities, you have the option to use either tools (user interface) or code (REST API, Python, or Node.js SDKs). This includes:
+    *   **Project tasks:** Creating projects, managing collaborators, getting a project ID, exporting assets, managing assets, managing runtime environments, and managing jobs can all be done with both tools and the Data and AI Common Core API.
+    *   **Data preparation tasks:** Connecting to data sources, adding connected data, and adding data files can be completed with tools, the Data and AI Common Core API, the ibm-watsonx-ai Python library, and the watsonx.ai Node.js SDK. Adding documents to a vector index can be done with the Vector index tool and the Data and AI Common Core API.
+*   **Tools-specific tasks:** Associating services is listed as being done with the ""Services & integrations page"" tool, with ""None"" indicated for code.
+*   **Code-specific additions:** For data preparation tasks like connecting to data sources, adding connected data, and adding data files, in addition to tools and the Data and AI Common Core API, you can also use the ibm-watsonx-ai Python library and the watsonx.ai Node.js SDK."
+What is the difference between working with tools versus writing custom code for foundation models?,grounded,"Comparison of working with tools and code, Planning the implementation workflow for your generative AI solution, Planning the implementation workflow for your generative AI solution","The tasks that can be completed with tools in the user interface and with REST API code are mostly the same. Some tasks can also be completed with Python code (Title: Comparison of working with tools and code).
+
+For generative AI solutions involving foundation models, projects utilize both tools (such as AutoAI and Tuning for experiment and flow assets) and notebooks (code) (Title: Planning the implementation workflow for your generative AI solution).
+
+While many tasks are available through both tools and various types of code (like Data and AI Common Core API, ibm-watsonx-ai Python library, or watsonx.ai Node.js SDK for data preparation), some project tasks, such as associating services, are only available through tools (Title: Comparison of working with tools and code)."
+How do I interact with foundation models in a conversational format using Python?,plain,"Quick code tutorial: Chat with a model, Quick code tutorial: Call a tool, Quick code tutorial: List models","You can interact with foundation models in a conversational format using the watsonx chat API or SDKs with Python.
+
+To do this, you would typically follow these steps:
+
+1.  **Import necessary libraries**: `APIClient`, `Credentials`, and `ModelInference` from `ibm_watsonx_ai`.
+2.  **Set up credentials**: Provide your `watsonx_ai_url` and `apikey`.
+3.  **Initialize the client**: Create an `APIClient` instance with your credentials.
+4.  **Define parameters**: Set parameters like `time_limit` and `max_new_token`.
+5.  **Specify the model**: Choose a `model_id` (e.g., ""meta-llama/llama-3-8b-instruct"") and provide your `project_id`.
+6.  **Create a ModelInference object**: Instantiate `ModelInference` with the model ID, client, parameters, and project ID.
+7.  **Construct messages**: Build a list of messages, specifying roles such as ""system"", ""user"", and ""assistant"" with their respective content to simulate a conversational flow.
+
+**Example Python code snippet:**
+
+```python
+from ibm_watsonx_ai import APIClient
+from ibm_watsonx_ai import Credentials
+from ibm_watsonx_ai.foundation_models import ModelInference
+
+credentials = Credentials(
+    url = ""{watsonx_ai_url}"",
+    api_key = ""{apikey}""
+)
+client = APIClient(credentials)
+
+params = {
+    ""time_limit"": 10000,
+    ""max_new_token"": 100
+}
+model_id = ""meta-llama/llama-3-8b-instruct""
+project_id = ""{project_id}""
+space_id = None # optional
+verify = False
+
+model = ModelInference(
+    model_id=model_id,
+    api_client=client,
+    params=params,
+    project_id=project_id,
+    space_id=space_id,
+    verify=verify,
+)
+
+messages = [
+    {
+        ""role"": ""system"",
+        ""content"": ""You are a helpful assistant.""
+    },
+    {
+        ""role"": ""user"",
+        ""content"": [
+            {
+                ""type"": ""text"",
+                ""text"": ""How far is Paris from Bangalore?""
+            }
+        ]
+    },
+    {
+        ""role"": ""assistant"",
+        ""content"": ""The distance between Paris, France, and Bangalore, India, is approximately 7,800 kilometers""
+    }
+]
+```
+
+Remember to replace `{watsonx_ai_url}`, `{apikey}`, and `{project_id}` with your actual values."
+How do I interact with foundation models in a conversational format using Python?,grounded,"Quick code tutorial: Chat with a model, Quick code tutorial: Call a tool, Quick code tutorial: List models","You can interact with foundation models in a conversational format using the watsonx chat API or SDKs, similar to the chat mode in Prompt Lab (Title: Quick code tutorial: Chat with a model).
+
+To do this with Python:
+1.  Add the following code to an `example.py` file (Title: Quick code tutorial: Chat with a model).
+2.  Replace `{watsonx_ai_url}`, `{apikey}`, and `{project_id}` with your specific values (Title: Quick code tutorial: Chat with a model).
+
+```python
+from ibm_watsonx_ai import APIClient
+from ibm_watsonx_ai import Credentials
+from ibm_watsonx_ai.foundation_models import ModelInference
+
+credentials = Credentials(
+    url = ""{watsonx_ai_url}"",
+    api_key = ""{apikey}""
+)
+client = APIClient(credentials)
+
+params = {
+    ""time_limit"": 10000,
+    ""max_new_token"": 100
+}
+
+model_id = ""meta-llama/llama-3-8b-instruct""
+project_id = ""{project_id}""
+space_id = None # optional
+verify = False
+
+model = ModelInference(
+    model_id=model_id,
+    api_client=client,
+    params=params,
+    project_id=project_id,
+    space_id=space_id,
+    verify=verify,
+)
+
+messages = [
+    {
+        ""role"": ""system"",
+        ""content"": ""You are a helpful assistant.""
+    },
+    {
+        ""role"": ""user"",
+        ""content"": [
+            {
+                ""type"": ""text"",
+                ""text"": ""How far is Paris from Bangalore?""
+            }
+        ]
+    },
+    {
+        ""role"": ""assistant"",
+        ""content"": ""The distance between Paris, France, and Bangalore, India, is approximately 7,800 kilometers.""
+    }
+]
+```
+(Title: Quick code tutorial: Chat with a model)"
+Is it possible to stream the generated text output instead of waiting for a single response? How do I do it?,plain,"Quick code tutorial: Stream text, Quick code tutorial: Stream text, Quick code tutorial: Chat with a model","Yes, it is possible to return the generated text as a stream of events instead of a single event using the watsonx.ai API and SDKs.
+
+Here's how you can do it:
+
+*   **Python:**
+    You can use the `generate_text_stream` method.
+    ```python
+    from ibm_watsonx_ai import Credentials
+    from ibm_watsonx_ai.foundation_models import ModelInference
+    import json
+
+    credentials = Credentials(
+        api_key = ""{apikey}"" ,
+        url = ""{watsonx_ai_url}""
+    )
+    model_inference = ModelInference(
+        model_id = ""ibm/granite-13b-chat-v2"",
+        params = { ""max_new_tokens"" : 30 },
+        credentials = credentials,
+        project_id = ""{project_id}""
+    )
+    prompt = ""Write short email announcing simply that the cafeteria will be closed today to be decorated for the staff party and be open tomorrow""
+    result = model.generate_text_stream(
+        prompt = prompt
+    )
+    for chunk in generated_response:
+        print ( chunk, end= ""\n"" , flush= True )
+    ```
+
+*   **Node.js:**
+    You can use the `generateTextStream` method and iterate through the stream.
+    ```javascript
+    const { IamAuthenticator } = require( ""ibm-cloud-sdk-core"" );
+    const { WatsonXAI } = require( ""@ibm-cloud/watsonx-ai"" );
+    const authenticator = new IamAuthenticator( { ""apikey"" : ""{apikey}"" } );
+
+    async function streamText () {
+        const text_stream = await watsonxAI_service.generateTextStream( {
+            ""input"" : ""Write short email announcing simply that the cafeteria will be closed today to be decorated for the staff party and be open tomorrow"",
+            ""modelId"" : ""google/flan-t5-xxl"",
+            ""parameters"" : { ""max_new_tokens"" : 30 },
+            ""returnObject"" : true ,
+            ""projectId"" : ""{project_id}""
+        } );
+        for await ( const obj of text_stream ) {
+            console.log( obj.data.results[0].generated_text );
+        }
+    }
+    streamText();
+    ```
+
+*   **Curl:**
+    You need to create a JSON file with your input and parameters, and then make a POST request to the `/ml/v1/text/generation_stream` endpoint.
+
+    1.  **Create a JSON file** (e.g., `request.json`):
+        ```json
+        {
+            ""input"" : ""Write short email announcing simply that the cafeteria will be closed today to be decorated for the staff party and be open tomorrow"",
+            ""model_id"" : ""google/flan-t5-xxl"",
+            ""parameters"": { ""max_new_tokens"": 30 },
+            ""project_id"" : ""<your-project-id>""
+        }
+        ```
+    2.  **Run the curl request:**
+        ```bash
+        curl -X POST \
+        -H ""Authorization: Bearer {token}"" \
+        -H ""Content-Type: application/json"" \
+        <your-service-url>/ml/v1/text/generation_stream?version=2024-05-31 \
+        --data ""@request.json""
+        ```"
+Is it possible to stream the generated text output instead of waiting for a single response? How do I do it?,grounded,"Quick code tutorial: Stream text, Quick code tutorial: Stream text, Quick code tutorial: Chat with a model","Yes, it is possible to return the generated text and chat output as a stream of events instead of a single event using the watsonx.ai API and SDKs (Title: Quick code tutorial: Stream text).
+
+To stream generated text:
+*   **Python:** Add the provided code to an `example.py` file, replacing `{watsonx_ai_url}`, `{apikey}`, and `{project_id}` with your values. The code uses `model.generate_text_stream()` (Title: Quick code tutorial: Stream text).
+*   **Node.js:** Add the provided code to an `example.js` file, replacing `{apikey}` and `{project_id}` with your values. The code uses `watsonxAI_service.generateTextStream()` (Title: Quick code tutorial: Stream text).
+*   **Curl:** Create a JSON file with the specified content, replacing `{project_id}` with your value. Then, run the provided curl request, replacing `{token}`, `<your-service-url>`, and `{JSON-file}` with your values. The request targets `/ml/v1/text/generation_stream` (Title: Quick code tutorial: Stream text)."
+How can I create text embeddings programmatically using the API?,plain,"Quick code tutorial: Create text embeddings, Quick code tutorial: Create text embeddings, Quick code tutorial: Create text embeddings","You can create text embeddings programmatically using the watsonx.ai API and SDKs in Python, Node.js, or Curl.
+
+Here are the ways to do it:
+
+*   **Python:**
+    1.  Import `Credentials` and `Embeddings` from `ibm_watsonx_ai`.
+    2.  Initialize `Credentials` with your `api_key` and `url`.
+    3.  Create an `Embeddings` object, specifying `model_id` (e.g., ""ibm/slate-125m-english-rtrvr""), `credentials`, and `project_id`.
+    4.  Call the `embedding.embed_documents()` method, passing a list of `texts`.
+
+    Example code snippet:
+    ```python
+    from ibm_watsonx_ai import Credentials
+    from ibm_watsonx_ai.foundation_models import Embeddings
+    import json
+
+    credentials = Credentials(
+        api_key = ""{apikey}"" ,
+        url = ""{watsonx_ai_url}""
+    )
+    embedding = Embeddings(
+        model_id= ""ibm/slate-125m-english-rtrvr"" ,
+        credentials = credentials,
+        project_id = ""{project_id}""
+    )
+    texts = [
+        ""Youth craves thrills while adulthood cherishes wisdom."" ,
+        ""Youth seeks ambition while adulthood finds contentment."" ,
+        ""Dreams chased in youth while goals pursued in adulthood.""
+    ]
+    result = embedding.embed_documents( texts = texts )
+    print ( json.dumps( result, indent= 3 ) )
+    ```
+
+*   **Node.js:**
+    1.  Require `IamAuthenticator` from `ibm-cloud-sdk-core` and `WatsonXAI` from `@ibm-cloud/watsonx-ai`.
+    2.  Create an `IamAuthenticator` instance with your `apikey`.
+    3.  Define an array of `inputs` (texts).
+    4.  Call the `watsonxAI_service.embedText()` method, providing `inputs`, `modelId` (e.g., ""ibm/slate-125m-english-rtrvr""), and `projectId`.
+
+    Example code snippet:
+    ```javascript
+    const { IamAuthenticator } = require( ""ibm-cloud-sdk-core"" );
+    const { WatsonXAI } = require( ""@ibm-cloud/watsonx-ai"" );
+    const authenticator = new IamAuthenticator( { ""apikey"" : ""{apikey}"" } );
+    const inputs = [
+        ""Youth craves thrills while adulthood cherishes wisdom."" ,
+        ""Youth seeks ambition while adulthood finds contentment."" ,
+        ""Dreams chased in youth while goals pursued in adulthood.""
+    ];
+    watsonxAI_service.embedText( {
+        ""inputs"" : inputs,
+        ""modelId"" : ""ibm/slate-125m-english-rtrvr"" ,
+        ""projectId"" : ""{project_id}""
+    } ). then ( ( response ) => {
+        console.log( JSON.stringify( response.results, null, 3 ) );
+    } );
+    ```
+
+*   **Curl (REST API):**
+    1.  Create a JSON file with the input texts, `model_id`, and `project_id`.
+        Example `JSON-file` content:
+        ```json
+        {
+            ""inputs"" : [
+                ""Youth craves thrills while adulthood cherishes wisdom."",
+                ""Youth seeks ambition while adulthood finds contentment."",
+                ""Dreams chased in youth while goals pursued in adulthood.""
+            ],
+            ""model_id"" : ""ibm/slate-125m-english-rtrvr"",
+            ""project_id"" : ""<your-project-id>""
+        }
+        ```
+    2.  Run a `curl` POST request to `<your-service-url>/ml/v1/text/embeddings?version=2024-05-31`.
+    3.  Include an `Authorization` header with a bearer token and a `Content-Type` header set to `application/json`.
+    4.  Pass the JSON file content using `--data ""@""{JSON-file}""`.
+
+    Example curl command:
+    ```bash
+    curl -X POST \
+    -H ""Authorization: Bearer {token}"" \
+    -H ""Content-Type: application/json"" \
+    <your-service-url>/ml/v1/text/embeddings?version=2024-05-31 \
+    --data ""@{JSON-file}""
+    ```"
+How can I create text embeddings programmatically using the API?,grounded,"Quick code tutorial: Create text embeddings, Quick code tutorial: Create text embeddings, Quick code tutorial: Create text embeddings","You can create text embeddings programmatically using the watsonx.ai API and SDKs (Title: Quick code tutorial: Create text embeddings).
+
+Specific methods include:
+*   **Python:** Use the `ibm_watsonx_ai` library, initialize `Credentials`, and then use the `Embeddings` class with a specified `model_id` and `project_id` to call `embed_documents()` (Title: Quick code tutorial: Create text embeddings).
+*   **Node.js:** Use `ibm-cloud-sdk-core` for authentication and `@ibm-cloud/watsonx-ai`. Initialize `WatsonXAI` and call `watsonxAI_service.embedText()` with `inputs`, `modelId`, and `projectId` (Title: Quick code tutorial: Create text embeddings).
+*   **Curl:** Send a POST request to the `/ml/v1/text/embeddings` endpoint, including authorization bearer token and a JSON file containing the `inputs`, `model_id`, and `project_id` (Title: Quick code tutorial: Create text embeddings)."
+How can I retrieve a list of supported foundation models and find their model IDs?,plain,"Quick code tutorial: List models, Quick code tutorial: List models, Planning the implementation workflow for your generative AI solution","You can retrieve a list of supported foundation models and find their model IDs programmatically using the watsonx.ai API and SDK.
+
+**Steps:**
+1.  **Prerequisite:** Complete the one-time steps to gather your credentials and prepare your system.
+2.  **Choose a method:**
+    *   **Python:** Add the following code to an `example.py` file, replacing `{watsonx_ai_url}` and `{apikey}` with your values:
+        ```python
+        from ibm_watsonx_ai import APIClient
+        from ibm_watsonx_ai import Credentials
+
+        credentials = Credentials(
+            url = ""{watsonx_ai_url}"",
+            api_key = {apikey},
+        )
+        api_client = APIClient(credentials)
+        api_client.foundation_models.TextModels.show()
+        ```
+    *   **Curl:** Run the following curl request, replacing `{token}` and `{watsonx_ai_url}` with your values:
+        ```bash
+        curl -X GET \
+        -H ""Authorization: Bearer {token}"" \
+        -H ""Content-Type: application/json"" \
+        -H ""Accept: application/json"" \
+        {watsonx_ai_url}/ml/v1/foundation_model_specs?version=2024-05-31
+        ```
+3.  Once the models are listed, copy the model ID of the model you want."
+How can I retrieve a list of supported foundation models and find their model IDs?,grounded,"Quick code tutorial: List models, Quick code tutorial: List models, Planning the implementation workflow for your generative AI solution","You can list supported foundation models programmatically with the watsonx.ai API and SDK using Python or Curl. After listing the models, you can find and copy the model IDs (Title: Quick code tutorial: List models)."
+How do I bake a classic chocolate chip cookie?,plain,"Quick code tutorial: Quick start and generate text, Quick code tutorial: Chat with a model, Quick code tutorial: Chat with a model","I cannot provide instructions on how to bake a classic chocolate chip cookie based on the provided context, as the context is empty."
+How do I bake a classic chocolate chip cookie?,grounded,"Quick code tutorial: Quick start and generate text, Quick code tutorial: Chat with a model, Quick code tutorial: Chat with a model",I don't know based on the provided documents.
+What is the capital of France?,plain,"Quick code tutorial: Quick start and generate text, Quick code tutorial: Chat with a model, Quick code tutorial: Quick start and generate text","I am sorry, but the provided context does not contain the answer to the question ""What is the capital of France?""."
+What is the capital of France?,grounded,"Quick code tutorial: Quick start and generate text, Quick code tutorial: Chat with a model, Quick code tutorial: Quick start and generate text",I don't know based on the provided documents.
+Who won the Super Bowl in 2024?,plain,"Quick code tutorial: Call a tool, Quick code tutorial: Call a tool, Quick code tutorial: Rerank text","I am sorry, but the provided context does not contain information about who won the Super Bowl in 2024."
+Who won the Super Bowl in 2024?,grounded,"Quick code tutorial: Call a tool, Quick code tutorial: Call a tool, Quick code tutorial: Rerank text",I don't know based on the provided documents.
