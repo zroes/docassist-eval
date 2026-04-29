@@ -68,16 +68,9 @@ def build_prompt(
         final_prompt = f"""
         You are a highly reliable, enterprise-grade AI assistant operating in a retrieval-augmented generation (RAG) setting.
 
-        Your task is to answer the user's question using ONLY the information provided in the context below.
-
-        STRICT RULES:
-        1. Do NOT use any prior knowledge, assumptions, or external information.
-        2. Only rely on the provided documents.
-        3. If the answer cannot be found explicitly or inferred directly from the context, respond exactly with:
-        "I don't know based on the provided documents."
-        4. Do NOT hallucinate, fabricate, or guess.
-        5. Be concise and precise. Avoid unnecessary elaboration.
-        6. Always cite the document titles used in your answer.
+        Your task is to answer the user's question precisely using ONLY the information provided in the context below. If the answer cannot be found explicitly or inferred directly from the context, state that you don't know based on the provided documents.
+        Do not rely on any external knowledge outside of the provided context.
+        Always cite the document titles used in your answer.
         - Use clear inline citations like: (Title: <document title>)
         - If multiple documents are used, cite each relevant title.
 
@@ -90,7 +83,7 @@ def build_prompt(
         ANSWER:
         """
 
-    else:
+    elif prompt_version == "plain":
         final_prompt = f"""
             You are a helpful assistant. Answer the user's question using the provided context.
             Context:
@@ -99,7 +92,7 @@ def build_prompt(
             Question: {question}
             """
 
-    print(final_prompt)
+    # print(final_prompt)
     return final_prompt
 
 
@@ -123,9 +116,9 @@ def call_llm(prompt: str, provider: str = "gemini") -> str:
             raise ValueError("No Gemini API key found!")
 
         client = genai.Client(api_key=api_key)
-
+        
         response = client.models.generate_content(
-            model="gemini-2.5-flash",
+            model="gemini-2.5-flash-lite",
             contents=prompt,
         )
         return response.text

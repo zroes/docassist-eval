@@ -1,4 +1,34 @@
-This is an RAG project for learning: it indexes a small slice of IBM watsonx documentation (and optional PDFs) so you can ask grounded questions against that corpus.
+This is an RAG project for learning: it indexes a small slice of IBM watsonx documentation so you can ask grounded questions against that corpus. **Note:** Currently, the program pulls information exclusively from two large PDF files located in `data/raw/pdf/` (HTML/JSON ingestion is present in the code but bypassed by default). If these PDFs are missing, the CLI will automatically prompt you to download them when building chunks.
+
+## Internal Logic Pipeline
+
+1. **PDF Extraction (`src/ingest/pdf.py`)**
+   - The system reads from the two large PDF files in `data/raw/pdf/`.
+   - Uses PyMuPDF (`fitz`) to extract text sequentially block-by-block, preserving the reading order for each page.
+   - Extracts document-level metadata (such as title and source).
+
+2. **Chunking (`src/chunk_corpus.py`, `src/chunking/strategies.py`)**
+   - The extracted text is processed into smaller segments to ensure it fits well within embedding and LLM context windows.
+   - Uses a recursive character splitting strategy: it attempts to split text naturally on boundaries (`\n\n`, `\n`, `. `, ` `) to stay under a maximum character limit (e.g., 2000 characters).
+   - If a section cannot be split naturally, it forces a split using an overlapping sliding window.
+   - A contextual prefix (document title, page number, and any manually identified section heading hints like lines starting with "▌") is added to each chunk.
+   - The finalized chunks are serialized to `data/processed/chunks.jsonl`.
+
+3. **Indexing (`src/index_chroma.py`, `src/retrieval/bm25_index.py`)**
+   - The JSONL chunks are embedded and indexed into two distinct systems:
+     - **ChromaDB**: Embeds chunk texts and metadata into a local persistent vector store for semantic/dense search.
+     - **BM25**: Builds a sparse index (`bm25_index.pkl`) for exact-keyword search.
+
+4. **Retrieval (`src/retrieve.py`)**
+   - When a user asks a question, the query is passed through a **hybrid retrieval** pipeline.
+   - It fetches a candidate pool of hits using both ChromaDB (semantic) and BM25 (keyword).
+   - Results are merged and normalized using Reciprocal Rank Fusion (RRF).
+   - A local cross-encoder then reranks these merged candidates to determine the true top-K most relevant chunks.
+
+5. **Prompting the LLM (`src/generate.py`)**
+   - The top-K retrieved chunks are formatted into a context block containing the document titles, sources, page numbers, and text.
+   - A prompt is assembled (typically in "grounded" mode) instructing the LLM (Gemini) to answer strictly based on the provided context and to cite its sources.
+   - The API is called, and the final grounded response is returned to the user.
 
 ## Layout
 
@@ -28,7 +58,7 @@ Shared: `src/config.py`, `src/schemas.py`, `src/chunking/`, `src/ingest/`, `src/
 
    ```bash
    .venv/bin/python src/cli.py ingest-html     # only if you need to refresh JSON from .txt
-   .venv/bin/python src/cli.py build-chunks    # rebuild chunks.jsonl
+   .venv/bin/python src/cli.py build-chunks    # rebuild chunks.jsonl (will prompt to download required PDFs if missing)
    .venv/bin/python src/cli.py index           # load Chroma (replaces collection)
    ```
 

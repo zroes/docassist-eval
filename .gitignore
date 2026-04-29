@@ -3,3 +3,4 @@ venv/
 .hf_cache/
 __pycache__/
 chroma_db
+data/raw/pdf/*.pdf

@@ -1,0 +1,9 @@
+To obtain your IBM entitlement API key, which is necessary for accessing images in the IBM Entitled Registry and completing the watsonx.data installation, you need to log in to the Container software library on My IBM using the IBMid and password associated with your entitled software (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 90).
+
+To generate a platform API key, you need to log in to the web client, click your avatar in the toolbar, then select "Profile and settings," followed by "API key" and "Generate new key." After clicking "Generate," you must copy and save your key, as it cannot be recovered if lost. If you lose your API key, you will need to generate a new one, which will invalidate the old key and prevent applications or scripts from authenticating (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 131).
+
+For watsonx Assistant, when configuring an extension, you will specify authentication and server information. You can select an "API key auth" type and provide the required additional information, such as the API key itself, if the API is not authenticated via other methods like OAuth 2.0, Basic Auth, or Bearer auth (Title: watsonx Assistant, Page: 459).
+
+When retrieving watsonx.data credentials for use with Watson Studio, you may need to get an API key from the watsonx.data administrator for the Hive Metastore (HMS) password (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 510). Additionally, when configuring a connection for dbt Core to a Presto engine within watsonx.data, an `apikey` field is mentioned, which should be your API key (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 496).
+
+There is no information provided in the documents regarding pricing or cost.
