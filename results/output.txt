@@ -1,9 +1,13 @@
-To obtain your IBM entitlement API key, which is necessary for accessing images in the IBM Entitled Registry and completing the watsonx.data installation, you need to log in to the Container software library on My IBM using the IBMid and password associated with your entitled software (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 90).
+To get started with watsonx Assistant, follow these first steps:
 
-To generate a platform API key, you need to log in to the web client, click your avatar in the toolbar, then select "Profile and settings," followed by "API key" and "Generate new key." After clicking "Generate," you must copy and save your key, as it cannot be recovered if lost. If you lose your API key, you will need to generate a new one, which will invalidate the old key and prevent applications or scripts from authenticating (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 131).
+1. Create or open an assistant where you want to use a dialog as the primary conversation with users (Title: watsonx Assistant, Page: 560).
 
-For watsonx Assistant, when configuring an extension, you will specify authentication and server information. You can select an "API key auth" type and provide the required additional information, such as the API key itself, if the API is not authenticated via other methods like OAuth 2.0, Basic Auth, or Bearer auth (Title: watsonx Assistant, Page: 459).
+2. Activate the dialog feature, which takes precedence over actions (Title: watsonx Assistant, Page: 560). 
 
-When retrieving watsonx.data credentials for use with Watson Studio, you may need to get an API key from the watsonx.data administrator for the Hive Metastore (HMS) password (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 510). Additionally, when configuring a connection for dbt Core to a Presto engine within watsonx.data, an `apikey` field is mentioned, which should be your API key (Title: IBM watsonx.data v 2.0.3: Fix-Pack Release, Page: 496).
+3. Add intents to represent the purposes or goals expressed in user input. For example, create a #reservation intent (Title: watsonx Assistant, Page: 676).
 
-There is no information provided in the documents regarding pricing or cost.
+4. Add entities to help identify references in user input related to intents of interest, such as enabling system entities for date, time and numbers (Title: watsonx Assistant, Page: 676).
+
+5. Build out the dialog by adding nodes to create a flow for collecting information from users, making use of slots (Title: watsonx Assistant, Page: 560).
+
+The key initial steps are creating the assistant, activating dialog, defining intents, adding entities, and constructing the dialog flow (Title: watsonx Assistant, Pages: 560, 676).

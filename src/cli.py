@@ -1,16 +1,17 @@
 """
 Command-line interface for the RAG (Retrieval Augmented Generation) data pipeline.
 
-This script is intended to be run from the repository root. For example, to see available commands, you would run:
+Run from the repository root::
 
     .venv/bin/python src/cli.py --help
 
-It ensures that the `src/` directory is added to `sys.path` so that Python imports within the project resolve correctly,
-whether scripts are launched from the `src/` directory itself or from the repository root.
+Ensures ``src/`` is on ``sys.path`` so intra-project imports resolve whether the
+script is launched from ``src/`` or from the repo root.
 """
 
 from __future__ import annotations
 
+import shutil
 import sys
 from pathlib import Path
 
@@ -24,63 +25,52 @@ import config
 from chunk_corpus import build_chunks
 
 
+# --- Config -----------------------------------------------------------------
+
+PROJECT_ROOT = _SRC.parent
+RESULTS_DIR = PROJECT_ROOT / "results"
+DEFAULT_ANSWER_FILE = RESULTS_DIR / "output.txt"
+
+EXPECTED_PDFS: dict[str, str] = {
+    "IBM watsonx.data version 2.0.3.pdf":
+        "https://www.ibm.com/support/pages/system/files/inline-files/"
+        "IBM%20watsonx.data%20version%202.0.3.pdf",
+    "watson-assistant.pdf":
+        "https://cloud.ibm.com/media/docs/pdf/watson-assistant/watson-assistant.pdf",
+}
+
+PROVIDER_CHOICES = ("gemini", "ibm")
+PROMPT_VERSION_CHOICES = ("grounded", "plain")
+
+
+# --- CLI group --------------------------------------------------------------
+
 @click.group()
 def main():
     """DocAssist RAG pipeline commands."""
-    pass # No-op: This group merely serves as a container for subcommands.
 
+
+# --- Ingestion / indexing ---------------------------------------------------
 
 @main.command("ingest-html")
 def ingest_html():
     """Convert ``data/raw/text/*.txt`` (URL + HTML) into ``data/raw/json/*.json``."""
-    # Lazily import the module to avoid circular dependencies and unnecessary imports when not using this command.
     import extract_html_txt_to_json as extract
-
-    # Execute the main function within the extract_html_txt_to_json module.
     extract.run()
 
 
 @main.command("build-chunks")
 def cmd_build_chunks():
     """Rebuild ``data/processed/chunks.jsonl`` from JSON and PDF inputs."""
-    # Lazily import urllib.request for downloading PDFs.
-    import urllib.request
-    
-    # Define a dictionary of expected PDF files and their corresponding download URLs.
-    expected_pdfs = {
-        "IBM watsonx.data version 2.0.3.pdf": "https://www.ibm.com/support/pages/system/files/inline-files/IBM%20watsonx.data%20version%202.0.3.pdf",
-        "watson-assistant.pdf": "https://cloud.ibm.com/media/docs/pdf/watson-assistant/watson-assistant.pdf"
-    }
-    
-    # Ensure the raw PDF directory exists, creating it and any necessary parent directories if they don't.
     config.RAW_PDF_DIR.mkdir(parents=True, exist_ok=True)
-    
-    # Iterate through the expected PDFs.
-    for filename, url in expected_pdfs.items():
-        pdf_path = config.RAW_PDF_DIR / filename
-        # If a PDF file is missing, prompt the user to download it.
-        if not pdf_path.exists():
-            if click.confirm(f"Missing \'{filename}\'. Download it now?"):
-                click.echo(f"Downloading {filename}...")
-                try:
-                    # Attempt to download the PDF from the given URL.
-                    urllib.request.urlretrieve(url, pdf_path)
-                    click.echo(f"Successfully downloaded {filename}.")
-                except Exception as e:
-                    # Report any errors during download.
-                    click.echo(f"Failed to download {filename}: {e}", err=True)
-
-    # Call the build_chunks function to process all input documents (JSON and downloaded PDFs) into chunks.
+    _ensure_expected_pdfs(EXPECTED_PDFS, config.RAW_PDF_DIR)
     build_chunks()
 
 
 @main.command("index")
 def cmd_index():
     """Load ``chunks.jsonl`` into Chroma (replaces the ``rag_corpus`` collection)."""
-    # Lazily import the module to avoid unnecessary imports.
     import index_chroma
-
-    # Execute the main indexing function.
     index_chroma.main()
 
 
@@ -93,52 +83,41 @@ def ingest_pdf(pdf_path: Path):
     Args:
         pdf_path: Path to an existing PDF file on disk.
     """
-    # Ensure the raw PDF directory exists, creating it and any necessary parent directories.
     config.RAW_PDF_DIR.mkdir(parents=True, exist_ok=True)
-    # Define the destination path for the PDF within the raw PDF directory.
     dest = config.RAW_PDF_DIR / pdf_path.name
 
-    # Check if the source PDF is already at the destination.
     if dest.resolve() == pdf_path.resolve():
         click.echo(f"PDF already at {dest}")
         return
-    # If a file with the same name already exists at the destination, raise an error to prevent overwriting.
     if dest.exists():
         raise click.ClickException(f"Target exists: {dest}")
 
-    # Copy the PDF file by reading its bytes and writing them to the destination.
-    dest.write_bytes(pdf_path.read_bytes())
+    shutil.copy2(pdf_path, dest)
     click.echo(f"Copied to {dest}. Run: python src/cli.py build-chunks")
 
 
+# --- Ask command ------------------------------------------------------------
+
 @main.command("ask")
 @click.argument("question", nargs=-1, required=True)
-@click.option("--top-k", default=5, show_default=True, type=int, help="Number of chunks to retrieve from Chroma.")
-@click.option(
-    "--prompt-version",
-    "prompt_version",
-    type=click.Choice(["grounded", "plain"], case_sensitive=False),
-    default="grounded",
-    show_default=True,
-    help="Grounded = cite-only from context; plain = lighter instructions.",
-)
-@click.option(
-    "--show-context/--no-show-context",
-    default=False,
-    help="Print retrieved titles, distances, and a short text preview before the answer.",
-)
-@click.option(
-    "--no-hybrid",
-    is_flag=True,
-    default=False,
-    help="Dense Chroma retrieval only (skip BM25 + RRF when combined with defaults).",
-)
-@click.option(
-    "--no-rerank",
-    is_flag=True,
-    default=False,
-    help="Skip cross-encoder rerank; use fused dense+BM25 order only.",
-)
+@click.option("--top-k", default=5, show_default=True, type=int,
+              help="Number of chunks to retrieve from Chroma.")
+@click.option("--prompt-version", "prompt_version",
+              type=click.Choice(PROMPT_VERSION_CHOICES, case_sensitive=False),
+              default="grounded", show_default=True,
+              help="Grounded = cite-only from context; plain = lighter instructions.")
+@click.option("--show-context/--no-show-context", default=False,
+              help="Print retrieved titles, distances, and a short text preview before the answer.")
+@click.option("--no-hybrid", is_flag=True, default=False,
+              help="Dense Chroma retrieval only (skip BM25 + RRF).")
+@click.option("--no-rerank", is_flag=True, default=False,
+              help="Skip cross-encoder rerank; use fused dense+BM25 order only.")
+@click.option("--provider", type=click.Choice(PROVIDER_CHOICES, case_sensitive=False),
+              default="gemini", show_default=True,
+              help="LLM provider to use for generating the answer.")
+@click.option("--output", "output_path", type=click.Path(path_type=Path),
+              default=DEFAULT_ANSWER_FILE, show_default=True,
+              help="File to write the answer to. Pass an empty string to skip writing.")
 def cmd_ask(
     question: tuple[str, ...],
     top_k: int,
@@ -146,79 +125,99 @@ def cmd_ask(
     show_context: bool,
     no_hybrid: bool,
     no_rerank: bool,
+    provider: str,
+    output_path: Path,
 ):
     """
-    Retrieve TOP_K chunks for QUESTION, then print a Gemini answer (needs GEMINI_API_KEY).
+    Retrieve TOP_K chunks for QUESTION, then print an LLM answer.
 
     Example::
 
         export GEMINI_API_KEY=...
         python src/cli.py ask "What is RAG used for?"
     """
-    # Lazily import necessary functions to avoid unnecessary imports until this command is called.
     from generate import generate_answer
     from retrieve import get_chroma_collection, retrieve_for_grounding
 
-    # Join the question arguments into a single string and remove leading/trailing whitespace.
     q = " ".join(question).strip()
-    # If the question is empty after stripping, raise an error.
     if not q:
         raise click.ClickException("Question is empty.")
 
-    # Get the ChromaDB collection (vector store).
     collection = get_chroma_collection()
-    # Retrieve relevant chunks for the question from the collection.
-    # Options for hybrid retrieval (dense + BM25) and reranking are controlled by command-line flags.
     formatted = retrieve_for_grounding(
-        collection,
-        [q],
+        collection, [q],
         top_k=top_k,
-        hybrid=not no_hybrid,  # Enable hybrid retrieval unless --no-hybrid flag is used.
-        rerank=not no_rerank,  # Enable reranking unless --no-rerank flag is used.
+        hybrid=not no_hybrid,
+        rerank=not no_rerank,
     )
-    # Extract the top chunks from the retrieval results.
     chunks = formatted[0]["top_chunks"]
 
-    # If no chunks were retrieved, inform the user.
     if not chunks:
         click.echo("(No chunks retrieved; index the corpus or broaden the question.)", err=True)
 
-    # If --show-context flag is enabled, print details about the retrieved chunks.
     if show_context:
-        click.echo("--- Retrieved context ---\n")
-        for i, c in enumerate(chunks, 1):
-            title = c.get("title", "?")  # Get the title of the chunk.
-            dist = c.get("distance")  # Get the distance score from the dense retrieval.
-            rs = c.get("rerank_score")  # Get the reranking score if available.
-            # Format the score bits for display.
-            score_bits = f"distance={dist}" + (f", rerank={rs:.3f}" if isinstance(rs, (int, float)) else "")
-            text = (c.get("text") or "").strip()  # Get the text content of the chunk.
-            # Create a short preview of the chunk text.
-            preview = text[:400] + ("…" if len(text) > 400 else "")
-            click.echo(f"{i}. {title}  ({score_bits})")
-            if preview:
-                click.echo(preview)
-            click.echo()
+        _print_context(chunks)
 
-    # Generate an answer using the retrieved chunks and the specified prompt version.
     try:
-        answer = generate_answer(q, chunks, prompt_version=prompt_version.lower())
+        answer = generate_answer(
+            q, chunks,
+            prompt_version=prompt_version.lower(),
+            provider=provider.lower(),
+        )
     except ValueError as exc:
-        # If an error occurs during answer generation, raise a ClickException.
         raise click.ClickException(str(exc)) from exc
 
-    # Print the generated answer to the console.
     click.echo(answer)
 
-    # Save the answer to a file in the results directory.
-    output_file_path = Path("../results/output.txt")
-    # Ensure the parent directory for the output file exists.
-    output_file_path.parent.mkdir(parents=True, exist_ok=True)
-    # Write the answer text to the file.
-    output_file_path.write_text(answer)
-    click.echo(f"Answer saved to {output_file_path}")
+    if output_path:
+        output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_path.write_text(answer)
+        click.echo(f"Answer saved to {output_path}")
+
+
+# --- Helpers ----------------------------------------------------------------
+
+def _ensure_expected_pdfs(pdfs: dict[str, str], dest_dir: Path) -> None:
+    """Prompt to download any expected PDFs missing from ``dest_dir``."""
+    import urllib.request
+
+    for filename, url in pdfs.items():
+        pdf_path = dest_dir / filename
+        if pdf_path.exists():
+            continue
+        if not click.confirm(f"Missing '{filename}'. Download it now?"):
+            continue
+        click.echo(f"Downloading {filename}...")
+        try:
+            urllib.request.urlretrieve(url, pdf_path)
+            click.echo(f"Successfully downloaded {filename}.")
+        except Exception as exc:  # noqa: BLE001 — surface any download failure
+            click.echo(f"Failed to download {filename}: {exc}", err=True)
+
+
+def _print_context(chunks: list[dict]) -> None:
+    """Print retrieved chunks with their scores and a short preview."""
+    click.echo("--- Retrieved context ---\n")
+    for i, c in enumerate(chunks, 1):
+        title = c.get("title", "?")
+        score_bits = _format_scores(c)
+        click.echo(f"{i}. {title}  ({score_bits})")
+
+        text = (c.get("text") or "").strip()
+        if text:
+            preview = text[:400] + ("…" if len(text) > 400 else "")
+            click.echo(preview)
+        click.echo()
+
+
+def _format_scores(chunk: dict) -> str:
+    """Return a 'distance=..., rerank=...' string for display."""
+    parts = [f"distance={chunk.get('distance')}"]
+    rerank = chunk.get("rerank_score")
+    if isinstance(rerank, (int, float)):
+        parts.append(f"rerank={rerank:.3f}")
+    return ", ".join(parts)
 
 
 if __name__ == "__main__":
-    # Entry point for the CLI. This ensures that `main()` is called when the script is executed.
     main()
