@@ -1,0 +1,13 @@
+To get started with watsonx Assistant, follow these first steps:
+
+1. Create or open an assistant where you want to use a dialog as the primary conversation with users (Title: watsonx Assistant, Page: 560).
+
+2. Activate the dialog feature, which takes precedence over actions (Title: watsonx Assistant, Page: 560). 
+
+3. Add intents to represent the purposes or goals expressed in user input. For example, create a #reservation intent (Title: watsonx Assistant, Page: 676).
+
+4. Add entities to help identify references in user input related to intents of interest, such as enabling system entities for date, time and numbers (Title: watsonx Assistant, Page: 676).
+
+5. Build out the dialog by adding nodes to create a flow for collecting information from users, making use of slots (Title: watsonx Assistant, Page: 560).
+
+The key initial steps are creating the assistant, activating dialog, defining intents, adding entities, and constructing the dialog flow (Title: watsonx Assistant, Pages: 560, 676).
